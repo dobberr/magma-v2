@@ -41,7 +41,7 @@ channel.addEventListener("message", (msg) => {
             </head>
             <body>
             <div id="wrapper">
-            <h1>AnuraOS is already running in another tab</h1>
+            <h1>Magma is already running in another tab</h1>
             <p>Please close the other tab and reload.</p>
             </div>
             </body>
@@ -199,7 +199,7 @@ window.addEventListener("load", async () => {
 					const tracker_br = document.getElementById("systemstatus-br")!;
 					tracker.style.display = "unset";
 					tracker_br.style.display = "unset";
-					tracker.innerText = "Anura is updating your system...";
+					tracker.innerText = "Magma is updating your system...";
 					try {
 						await new anura.fs.Shell().promises.rm("/anura_files", {
 							recursive: true,
@@ -215,7 +215,7 @@ window.addEventListener("load", async () => {
 		} else {
 			// Domain is either expired or some non conformant milestone is being delivered (bad extension?)
 			// Either way, ignore and dont try and perform an update
-			console.log("Anura update poisoning detected...");
+			console.log("Magma update poisoning detected...");
 		}
 	}
 	const isGitRev = (hash: string) => /^[0-9a-f]{7,40}$/i.test(hash);
@@ -276,9 +276,9 @@ window.addEventListener("load", async () => {
 
 		if (needsMigration.length > 0) {
 			anura.notifications.add({
-				title: "Anura Update",
+				title: "Magma Update",
 				description:
-					"AnuraOS has been updated to a new version. Users are recommended to change the installation directory of their apps and libraries to /usr/ to ensure consistency with new installations.",
+					"Magma has been updated to a new version. Users are recommended to change the installation directory of their apps and libraries to /usr/ to ensure consistency with new installations.",
 				timeout: "never",
 				buttons: [
 					{
@@ -691,9 +691,9 @@ async function bootUserCustomizations() {
 		const recovery = new RecoveryApp();
 		anura.registerApp(recovery);
 		anura.notifications.add({
-			title: "Anura Error",
+			title: "Magma Error",
 			description:
-				"Anura has detected a system fault and booted in safe mode. Click this notification to enter the recovery app.",
+				"Magma has detected a system fault and booted in safe mode. Click this notification to enter the recovery app.",
 			timeout: "never",
 			callback: () => anura.apps["anura.recovery"].open(),
 		});
@@ -734,7 +734,7 @@ async function bootUserCustomizations() {
 						const process = anura.processes.create(script);
 						process.title = file;
 					} catch (e) {
-						anura.logger.error("Anura failed to load a script " + e);
+						anura.logger.error("Magma failed to load a script " + e);
 					}
 				}
 			}
@@ -751,7 +751,7 @@ async function bootUserCustomizations() {
 			try {
 				await anura.registerExternalLib(`/fs/${directories["libs"]}/${file}/`);
 			} catch (e) {
-				anura.logger.error("Anura failed to load a lib", e);
+				anura.logger.error("Magma failed to load a lib", e);
 			}
 		}
 	} catch (e) {
@@ -772,7 +772,7 @@ async function bootUserCustomizations() {
 							`/fs/${directories["apps"]}/${file}/`,
 						);
 					} catch (e) {
-						anura.logger.error("Anura failed to load an app", e);
+						anura.logger.error("Magma failed to load an app", e);
 					}
 				} else {
 					// This is a shortcut file

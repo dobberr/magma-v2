@@ -78,7 +78,7 @@ export function Item() {
 	this.absolutePath = `${this.path}/${this.file}`.replace("//", "/");
 	if (this.type === "file") {
 		this.icon = anura.files.fallbackIcon;
-		this.description = "Anura File";
+		this.description = "Magma File";
 	} else {
 		this.icon = anura.files.folderIcon;
 		this.description = "Folder";

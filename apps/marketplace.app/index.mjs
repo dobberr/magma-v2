@@ -31,12 +31,12 @@ document.addEventListener("anura-theme-change", () => {
 window.saved = $state({
 	repos: Object.entries(
 		(await persistence.get("repos")) || {
-			"Anura App Repository":
+			"Magma App Repository":
 				"https://raw.githubusercontent.com/MercuryWorkshop/anura-repo/master/",
-			"Anura Developer Repository":
+			"Magma Developer Repository":
 				"https://raw.githubusercontent.com/MercuryWorkshop/anura-developer-repo/master/",
-			"Anura Games": "https://games.anura.pro/",
-			"Anura Extras":
+			"Magma Games": "https://games.anura.pro/",
+			"Magma Extras":
 				"https://raw.githubusercontent.com/BomberFish/anura-repo/master/",
 		},
 	),

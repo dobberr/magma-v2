@@ -261,9 +261,9 @@ export async function getIcon(path) {
 export async function getFileType(path) {
 	switch (path.split(".").slice("-2").join(".")) {
 		case "app.zip":
-			return "Anura App Archive";
+			return "Magma App Archive";
 		case "lib.zip":
-			return "Anura Library Archive";
+			return "Magma Library Archive";
 		default:
 			break;
 	}
@@ -272,14 +272,14 @@ export async function getFileType(path) {
 
 	if (ext === "app" || ext === "lib") {
 		// TODO: dont assume application or library by file extension, actually check
-		return `Anura ${ext == "app" ? "Application" : "Library"}`;
+		return `Magma ${ext == "app" ? "Application" : "Library"}`;
 	}
 
 	const iconObject = icons.files.find((icon) => icon.ext === ext);
 	if (iconObject) {
 		return iconObject.type;
 	}
-	return "Anura File";
+	return "Magma File";
 }
 
 function localPathToURL(path) {

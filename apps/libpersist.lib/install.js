@@ -16,8 +16,8 @@ export default function install(anura) {
 			JSON.stringify({
 				name: "anureg",
 				vendor: "[[internal]]",
-				description:
-					"Anura's default persistance provider, using a simple JSON file",
+					description:
+						"Magma's default persistance provider, using a simple JSON file",
 				handler: "index.js",
 			}),
 		);

@@ -1,5 +1,5 @@
 class AboutApp extends App {
-	name = "About Anura";
+	name = "About Magma";
 	package = "anura.about";
 	icon = "/assets/icons/aboutapp.png";
 
@@ -18,7 +18,7 @@ class AboutApp extends App {
 			</div>
 			<div class="aboutapp-logo-divider"></div>
 			<div class="aboutapp-content">
-				<p>AnuraOS</p>
+				<p>Magma</p>
 				<p>
 					Version {anura.version.codename} ({anura.version.pretty}) (OS build{" "}
 					<button
@@ -38,7 +38,7 @@ class AboutApp extends App {
 				{$if(
 					anura.settings.get("x86-disabled"),
 					<p>
-						Anura x86 subsystem disabled. <br /> Enable it in{" "}
+						Magma x86 subsystem disabled. <br /> Enable it in{" "}
 						<button
 							on:click={() => {
 								anura.apps["anura.settings"].open();
@@ -49,15 +49,15 @@ class AboutApp extends App {
 						</button>
 						.
 					</p>,
-					<p>Anura x86 subsystem enabled.</p>,
+					<p>Magma x86 subsystem enabled.</p>,
 				)}
 
 				<br />
 
 				{$if(
 					anura.settings.get("bootFromOPFS"),
-					<p>Anura is booting from OPFS.</p>,
-					<p>Anura OPFS boot disabled.</p>,
+					<p>Magma is booting from OPFS.</p>,
+					<p>Magma OPFS boot disabled.</p>,
 				)}
 
 				<br />

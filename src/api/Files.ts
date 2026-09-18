@@ -133,10 +133,10 @@ class FilesAPI {
 			if (handler.handler_type === "module") {
 				const handlerModule = await anura.import(handler.id);
 				if (!handlerModule) {
-					return "Anura File";
+					return "Magma File";
 				}
 				if (!handlerModule.getFileType) {
-					return "Anura File";
+					return "Magma File";
 				}
 				return handlerModule.getFileType(path);
 			}
@@ -147,7 +147,7 @@ class FilesAPI {
 						`if (getFileType) {
                             getFileType(${JSON.stringify(path)})
                         } else {
-                            "Anura File"
+                            "Magma File"
                         }`,
 				); // here, JSON.stringify is used to properly escape the string
 			}
@@ -163,10 +163,10 @@ class FilesAPI {
 			if (handler.handler_type === "module") {
 				const handlerModule = await anura.import(handler.id);
 				if (!handlerModule) {
-					return "Anura File";
+					return "Magma File";
 				}
 				if (!handlerModule.getFileType) {
-					return "Anura File";
+					return "Magma File";
 				}
 				return handlerModule.getFileType(path);
 			}
@@ -182,7 +182,7 @@ class FilesAPI {
 				); // here, JSON.stringify is used to properly escape the string
 			}
 		}
-		return "Anura File";
+		return "Magma File";
 	}
 
 	setFolderIcon(path: string) {

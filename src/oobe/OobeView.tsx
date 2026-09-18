@@ -149,7 +149,7 @@ class OobeView {
 		{
 			elm: (
 				<div class="screen" id="welcome">
-					<h1>Welcome to AnuraOS</h1>
+					<h1>Welcome to Magma</h1>
 					<div id="subtitle">Effortless. Modern. Powerful.</div>
 					<div id="gridContent">
 						<img id="animation" src="assets/oobe/welcome.gif" />
@@ -167,7 +167,7 @@ class OobeView {
 			elm: (
 				<div class="screen" id="features">
 					<h1>Choose your experience</h1>
-					<div id="subtitle">What kind of Anura user are you?</div>
+					<div id="subtitle">What kind of Magma user are you?</div>
 					<label class="matter-checkbox">
 						<input
 							type="checkbox"
@@ -177,7 +177,7 @@ class OobeView {
 					</label>
 					<div class="sub">
 						<span class="material-symbols-outlined">info</span>
-						&nbsp;This allows you to use AnuraOS without an internet connection.
+						&nbsp;This allows you to use Magma without an internet connection.
 					</div>
 					<br></br>
 					<label class="matter-checkbox">
@@ -186,7 +186,7 @@ class OobeView {
 					</label>
 					<div class="sub">
 						<span class="material-symbols-outlined">info</span>
-						&nbsp;This allows you to run Linux applications on AnuraOS.
+						&nbsp;This allows you to run Linux applications on Magma.
 					</div>
 					<br></br>
 					<label class="matter-checkbox">
@@ -268,7 +268,7 @@ class OobeView {
 					<div id="assetsDiv" style="display:none;"></div>
 					<h1>Downloading assets</h1>
 					<div id="subtitle" style="color: white;">
-						For the best experience, AnuraOS needs to download required assets.
+						For the best experience, Magma needs to download required assets.
 					</div>
 					<img src="/assets/oobe/spinner.gif" />
 					<br />
@@ -450,7 +450,7 @@ async function preloadFiles(tracker = document.getElementById("tracker")) {
 			if (Number(item) % chunkSize === chunkSize - 1) {
 				await Promise.all(promises);
 			}
-			tracker!.innerText = `Downloading anura system files, chunk ${i}/${list.length}`;
+			tracker!.innerText = `Downloading Magma system files, chunk ${i}/${list.length}`;
 			i++;
 		}
 		await Promise.all(promises);

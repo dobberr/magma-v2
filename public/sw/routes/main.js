@@ -124,7 +124,7 @@ function offlineError() {
             </head>
             <body>
             <div id="wrapper">
-            <h1>AnuraOS is offline without offline support enabled.</h1>
+            <h1>Magma is offline without offline support enabled.</h1>
             <p>If you have offline support enabled and you are seeing this, please refresh the page.</p>
             </div>
             </body>

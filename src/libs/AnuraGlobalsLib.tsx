@@ -4,7 +4,7 @@
 class AnuraGlobalsLib extends Lib {
 	icon = "/assets/icons/generic.svg";
 	package = "anura.globalscope";
-	name = "Anura Global Objects";
+	name = "Magma Global Objects";
 	latestVersion = anura.version.pretty;
 
 	versions = {

@@ -60,11 +60,11 @@ class RecoveryApp extends App {
 				<button
 					style="background: #B71C1C;"
 					class="matter-button-contained"
-					title="Reset your Anura install to factory settings. This will delete all of your data."
+					title="Reset your Magma install to factory settings. This will delete all of your data."
 					on:click={async () => {
 						if (
 							await anura.dialog.confirm(
-								"Are you sure you want to powerwash Anura? All of your data will be lost.",
+								"Are you sure you want to powerwash Magma? All of your data will be lost.",
 							)
 						) {
 							try {
@@ -94,7 +94,7 @@ class RecoveryApp extends App {
 				>
 					Powerwash
 				</button>
-				{/* Anura Shell Button */}
+				{/* Magma Shell Button */}
 				<button
 					style="background: #2f2f2f;"
 					class="matter-button-contained"
@@ -112,7 +112,7 @@ class RecoveryApp extends App {
 						}
 					}}
 				>
-					Anura Shell
+					Magma Shell
 				</button>
 				{/* Invalidate Cache Button */}
 				{$if(

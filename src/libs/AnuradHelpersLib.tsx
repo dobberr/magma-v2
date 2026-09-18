@@ -70,7 +70,7 @@ namespace AnuradHelpers {
 class AnuradHelpersLib extends Lib {
 	icon = "/assets/icons/generic.svg";
 	package = "anura.daemon.helpers";
-	name = "Anurad Helpers";
+	name = "Magma Helpers";
 
 	versions: { [key: string]: any } = {
 		"0.1.0": AnuradHelpers,
