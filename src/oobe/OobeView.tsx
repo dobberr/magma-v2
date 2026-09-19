@@ -37,68 +37,48 @@ class OobeView {
 		left: 0;
 		overflow: auto;
 		font-family: var(--theme-font-sans);
-		background:
-			radial-gradient(
-				circle at 15% 10%,
-				rgba(255, 107, 61, 0.18),
-				transparent 34%
-			),
-			radial-gradient(
-				circle at 90% 90%,
-				rgba(139, 92, 246, 0.2),
-				transparent 36%
-			),
-			#090a0f;
-		--oobe-accent: #ff7048;
-		--oobe-text: #f7f7fb;
-		--oobe-muted: #a3a5b5;
-		--oobe-panel: rgba(20, 21, 31, 0.84);
-		--oobe-border: rgba(255, 255, 255, 0.12);
+		background: #09090b;
+		--oobe-accent: #fafafa;
+		--oobe-text: #fafafa;
+		--oobe-muted: #a1a1aa;
+		--oobe-panel: #09090b;
+		--oobe-border: #27272a;
 
 		#oobe-top {
 			box-sizing: border-box;
-			min-height: 100%;
+			height: 100%;
+			min-height: 100vh;
 			width: 100%;
-			display: grid;
-			place-items: center;
-		padding: 32px;
+			display: flex;
 		}
 
 		#content {
 			position: relative;
 			box-sizing: border-box;
-			width: min(920px, 100%);
-			min-height: 600px;
-			padding: 48px;
-			border: 1px solid var(--oobe-border);
-			border-radius: 28px;
+			width: 100%;
+			height: 100%;
+			min-height: 100vh;
+			padding: clamp(32px, 7vw, 96px) clamp(24px, 8vw, 128px);
 			background: var(--oobe-panel);
-			box-shadow:
-				0 24px 80px rgba(0, 0, 0, 0.45),
-				inset 0 1px rgba(255, 255, 255, 0.08);
-			backdrop-filter: blur(24px);
-			-webkit-backdrop-filter: blur(24px);
-			overflow: hidden;
-			@media (max-width: 700px) {
-				min-height: min(700px, calc(100vh - 32px));
-				padding: 32px 24px;
-				border-radius: 22px;
-			}
+			overflow: auto;
 		}
 
 		#content .screen {
+			box-sizing: border-box;
 			width: 100%;
 			height: 100%;
-			min-height: 504px;
+			min-height: calc(100vh - clamp(64px, 14vw, 192px));
+			max-width: 1040px;
+			margin: 0 auto;
 		}
 
 		.screen h1 {
 			max-width: 600px;
 			margin: 0;
 			color: var(--oobe-text);
-			font-size: clamp(2rem, 4vw, 3.25rem);
+			font-size: clamp(2.25rem, 6vw, 4.5rem);
 			font-weight: 700;
-			letter-spacing: -0.045em;
+			letter-spacing: -0.055em;
 			line-height: 1.05;
 		}
 
@@ -111,10 +91,10 @@ class OobeView {
 
 		.screen #gridContent {
 			display: grid;
-			grid-template-columns: minmax(0, 1fr) minmax(260px, 0.8fr);
+			grid-template-columns: minmax(0, 1fr);
 			grid-template-rows: minmax(0, 1fr) auto;
 			gap: 32px;
-			min-height: 325px;
+			min-height: 0;
 		}
 
 		.screen #gridContent #topButtons {
@@ -135,8 +115,8 @@ class OobeView {
 			justify-content: center;
 			gap: 8px;
 			min-width: 132px;
-			background: #20222b;
-			border: 1px solid rgba(255, 255, 255, 0.16);
+			background: #18181b;
+			border: 1px solid #3f3f46;
 			border-radius: 12px;
 			color: white;
 			height: 44px;
@@ -144,7 +124,7 @@ class OobeView {
 			font-size: 0.9rem;
 			font-weight: 700;
 			letter-spacing: 0.01em;
-			box-shadow: 0 6px 18px rgba(0, 0, 0, 0.28);
+			box-shadow: none;
 			transition:
 				transform 0.2s,
 				box-shadow 0.2s,
@@ -152,36 +132,22 @@ class OobeView {
 		}
 
 		.screen .preferredButton:hover {
-			background: #2a2d38;
-			border-color: rgba(255, 112, 72, 0.55);
+			background: #27272a;
+			border-color: #52525b;
 			transform: translateY(-1px);
-			box-shadow: 0 8px 22px rgba(0, 0, 0, 0.38);
+			box-shadow: none;
 		}
 
 		.screen button {
-			background: transparent;
+			background: #18181b;
 			border-radius: 12px;
-			border: 1px solid var(--oobe-border);
+			border: 1px solid #3f3f46;
 			color: var(--oobe-text);
 			height: 44px;
 			margin: 0;
 			padding: 0 16px;
 			cursor: pointer;
 			font-family: var(--theme-font-sans);
-		}
-
-		.screen #animation {
-			grid-column: 2 / span 1;
-			grid-row: 1 / span 2;
-			align-self: center;
-			justify-self: end;
-			width: min(100%, 330px);
-			max-height: 270px;
-			object-fit: contain;
-			border-radius: 20px;
-			border: 1px solid var(--oobe-border);
-			box-shadow: 0 18px 50px rgba(0, 0, 0, 0.3);
-			display: ${anura.platform.type === "mobile" ? "none;" : "block;"};
 		}
 
 		.material-symbols-outlined {
@@ -202,8 +168,24 @@ class OobeView {
 		}
 
 		#features {
+			max-width: 760px !important;
 			display: flex;
 			flex-direction: column;
+			justify-content: center;
+		}
+
+		#welcome {
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+		}
+
+		#welcome #gridContent {
+			display: block;
+		}
+
+		#welcome #bottomButtons {
+			margin-top: 48px;
 		}
 
 		#features #subtitle {
@@ -217,7 +199,7 @@ class OobeView {
 			padding: 16px;
 			border: 1px solid var(--oobe-border);
 			border-radius: 16px;
-			background: rgba(255, 255, 255, 0.035);
+			background: #09090b;
 			cursor: pointer;
 			transition:
 				background 0.2s,
@@ -226,8 +208,8 @@ class OobeView {
 		}
 
 		.featureOption:hover {
-			background: rgba(255, 255, 255, 0.07);
-			border-color: rgba(255, 112, 72, 0.45);
+			background: #18181b;
+			border-color: #52525b;
 			transform: translateY(-1px);
 		}
 
@@ -236,8 +218,8 @@ class OobeView {
 		}
 
 		.featureOption:has(input:checked) {
-			background: rgba(255, 112, 72, 0.1);
-			border-color: rgba(255, 112, 72, 0.5);
+			background: #18181b;
+			border-color: #71717a;
 		}
 
 		.featureOption input {
@@ -271,7 +253,7 @@ class OobeView {
 		}
 
 		#features #size {
-			margin-top: auto;
+			margin-top: 24px;
 			padding-top: 20px;
 			color: var(--oobe-text);
 			font-weight: 600;
@@ -280,11 +262,7 @@ class OobeView {
 		#features #gridContent {
 			min-height: 0;
 			margin-top: 24px;
-			grid-template-columns: minmax(0, 1fr) auto;
-		}
-
-		#features #animation {
-			display: none;
+			grid-template-columns: minmax(0, 1fr);
 		}
 
 		#downloadingFiles {
@@ -300,10 +278,21 @@ class OobeView {
 			margin-bottom: 32px;
 		}
 
-		#downloadingFiles > img {
+		.spinner {
+			box-sizing: border-box;
 			width: 56px;
 			height: 56px;
+			border: 3px solid #27272a;
+			border-top-color: #fafafa;
+			border-radius: 999px;
 			margin-bottom: 24px;
+			animation: oobe-spin 0.8s linear infinite;
+		}
+
+		@keyframes oobe-spin {
+			to {
+				transform: rotate(360deg);
+			}
 		}
 
 		#tracker {
@@ -313,10 +302,6 @@ class OobeView {
 		}
 
 		@media (max-width: 700px) {
-			#oobe-top {
-				padding: 16px;
-			}
-
 			#content .screen {
 				min-height: 0;
 			}
@@ -351,7 +336,6 @@ class OobeView {
 					<h1>Welcome to Magma</h1>
 					<div id="subtitle">Effortless. Modern. Powerful.</div>
 					<div id="gridContent">
-						<img id="animation" src="assets/oobe/welcome.gif" />
 						<div id="bottomButtons">
 							<button on:click={() => this.nextStep()} class="preferredButton">
 								Get Started
@@ -410,7 +394,6 @@ class OobeView {
 						<span>These features can always be changed later in Settings.</span>
 					</div>
 					<div id="gridContent">
-						<img id="animation" src="assets/oobe/checking_for_update.gif" />
 						<div id="bottomButtons">
 							<button
 								on:click={async () => {
@@ -469,7 +452,7 @@ class OobeView {
 					<div id="subtitle">
 						For the best experience, Magma needs to download required assets.
 					</div>
-					<img src="/assets/oobe/spinner.gif" />
+					<div class="spinner" aria-label="Loading"></div>
 					<br />
 					<span id="tracker"></span>
 				</div>
