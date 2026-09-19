@@ -366,23 +366,34 @@ class SettingsApp extends App {
 									<button
 										on:click={async () => {
 											this.state.x86_installing = true;
-											anura.settings.set("x86-image", "alpine");
-											await installx86();
-											anura.settings.set("x86-disabled", false);
-											anura.notifications.add({
-												title: "x86 Subsystem Installed",
-												description:
-													"x86 OS has sucessfully installed. Reload the page to use it!",
-												timeout: 5000,
-											});
+											try {
+												await anura.settings.set("x86-image", "alpine");
+												await installx86();
+												await anura.settings.set("x86-disabled", false);
+												anura.notifications.add({
+													title: "x86 Subsystem Installed",
+													description:
+														"x86 OS has sucessfully installed. Reload the page to use it!",
+													timeout: 5000,
+												});
 
-											this.state.x86_installing = false;
-											this.state.show_x86_install = true;
-
-											if (document.getElementById("tracker")) {
-												document.getElementById("tracker")!.innerText =
-													"Installed!";
+												this.state.show_x86_install = true;
+												if (document.getElementById("tracker")) {
+													document.getElementById("tracker")!.innerText =
+														"Installed!";
+												}
+											} catch (error) {
+												const message =
+													error instanceof Error
+														? error.message
+														: String(error);
+												anura.notifications.add({
+													title: "x86 Subsystem Installation Failed",
+													description: message,
+													timeout: 10000,
+												});
 											}
+											this.state.x86_installing = false;
 										}}
 										class="matter-button-contained"
 									>

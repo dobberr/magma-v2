@@ -513,99 +513,65 @@ class OobeView {
 
 async function installx86(tracker = document.getElementById("tracker")) {
 	console.debug("installing x86");
-	await anura.fs.mkdir("/boot");
+	try {
+		await anura.fs.promises.mkdir("/boot");
+	} catch (error: any) {
+		// Reinstalling the subsystem is valid, so an existing /boot directory
+		// should not prevent the image files from being refreshed.
+		if (error?.code !== "EEXIST") throw error;
+	}
 	const x86image = anura.settings.get("x86-image");
+	const image = anura.config.x86[x86image];
+	const fetchAsset = async (url: string, name: string) => {
+		const response = await fetch(url);
+		if (!response.ok) {
+			throw new Error(`${name} unavailable (${response.status}): ${url}`);
+		}
+		return response;
+	};
+
 	tracker!.innerText = "Downloading x86 kernel";
-	const bzimage = await fetch(anura.config.x86[x86image].bzimage);
-	anura.fs.writeFile(
+	const bzimage = await fetchAsset(image.bzimage, "x86 kernel");
+	await anura.fs.promises.writeFile(
 		"/boot/bzimage",
 		Filer.Buffer(await bzimage.arrayBuffer()),
 	);
 	tracker!.innerText = "Downloading x86 initrd";
-	const initrd = await fetch(anura.config.x86[x86image].initrd);
-	anura.fs.writeFile(
+	const initrd = await fetchAsset(image.initrd, "x86 initrd");
+	await anura.fs.promises.writeFile(
 		"/boot/initrd.img",
 		Filer.Buffer(await initrd.arrayBuffer()),
 	);
 
-	if (typeof anura.config.x86[x86image].rootfs === "string") {
-		const rootfs = await fetch(anura.config.x86[x86image].rootfs);
-		const blob = await rootfs.blob();
+	if (typeof image.rootfs === "string") {
+		const rootfs = await fetchAsset(image.rootfs, "x86 root filesystem");
 		//@ts-ignore
-		await anura.x86hdd.loadfile(blob);
-	} else if (anura.config.x86[x86image].rootfs) {
-		// TODO: add batching, this will bottleneck and OOM if the rootfs is too large
+		await anura.x86hdd.loadfile(await rootfs.blob());
+	} else if (image.rootfs) {
+		const urls: string[] = image.rootfs;
+		const files: Blob[] = new Array(urls.length);
+		let next = 0;
+		let completed = 0;
 
-		console.debug("fetching");
-		// const files = await Promise.all(
-		//     anura.config.x86[x86image].rootfs.map((part: string) => fetch(part)),
-		// );
+		const downloadChunk = async () => {
+			while (true) {
+				const assigned = next++;
+				if (assigned >= urls.length) return;
 
-		const files: Blob[] = [];
-		let limit = 4;
-		let i = 0;
-		let done = false;
-		let doneSoFar = 0;
-		const doWhenAvail = function () {
-			if (limit === 0) return;
-			limit--;
-			const assigned = i;
-			i++;
-
-			fetch(anura.config.x86[x86image].rootfs[assigned])
-				.then(async (response) => {
-					if (response.status !== 200) {
-						console.error("Status code bad on chunk " + assigned);
-						console.error(anura.config.x86[x86image].rootfs[assigned]);
-						console.error("Finished " + doneSoFar + " chunks before error");
-						anura.notifications.add({
-							title: "bad chunk on x86 download",
-							description: `Chunk ${assigned} gave status code ${response.status}\nClick me to reload`,
-							timeout: 50000,
-							callback: () => {
-								location.reload();
-							},
-						});
-						return;
-					}
-					files[assigned] = await response.blob();
-					limit++;
-					doneSoFar++;
-					tracker!.innerHTML = `Downloading x86 rootfs. Chunk ${doneSoFar}/${anura.config.x86[x86image].rootfs.length} done`;
-					if (i < anura.config.x86[x86image].rootfs.length) {
-						doWhenAvail();
-					}
-					if (doneSoFar === anura.config.x86[x86image].rootfs.length) {
-						done = true;
-					}
-					console.debug(
-						anura.config.x86[x86image].rootfs.length -
-							doneSoFar +
-							" chunks to go",
-					);
-				})
-
-				.catch((e) => {
-					console.error("Error on chunk " + assigned);
-					anura.notifications.add({
-						title: "bad chunk on x86 download",
-						description: `Chunk ${assigned} had a download error ${e}\nClick me to reload`,
-						timeout: 50000,
-						callback: () => {
-							location.reload();
-						},
-					});
-				}); // Peak error handling right there
+				const response = await fetchAsset(
+					urls[assigned],
+					`x86 rootfs chunk ${assigned}`,
+				);
+				files[assigned] = await response.blob();
+				completed++;
+				tracker!.innerText = `Downloading x86 rootfs. Chunk ${completed}/${urls.length} done`;
+			}
 		};
-		doWhenAvail();
-		doWhenAvail();
-		doWhenAvail();
-		doWhenAvail();
-		while (!done) {
-			await sleep(200);
-		}
 
-		console.debug("constructing blobs...");
+		await Promise.all(
+			Array.from({ length: Math.min(4, urls.length) }, downloadChunk),
+		);
+
 		tracker!.innerText = "Concatenating and installing x86 rootfs";
 		//@ts-ignore
 		await anura.x86hdd.loadfile(new Blob(files));
