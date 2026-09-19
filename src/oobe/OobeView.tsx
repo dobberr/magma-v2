@@ -28,54 +28,94 @@ class OobeView {
 	}
 
 	css = css`
-		color-scheme: light;
+		color-scheme: dark;
 		z-index: 9996;
 		position: absolute;
 		width: 100%;
 		height: 100%;
 		top: 0;
 		left: 0;
-		display: flex;
-		justify-content: center;
-		align-content: center;
-		flex-wrap: wrap;
+		overflow: auto;
+		font-family: var(--theme-font-sans);
+		background:
+			radial-gradient(
+				circle at 15% 10%,
+				rgba(255, 107, 61, 0.18),
+				transparent 34%
+			),
+			radial-gradient(
+				circle at 90% 90%,
+				rgba(139, 92, 246, 0.2),
+				transparent 36%
+			),
+			#090a0f;
+		--oobe-accent: #ff7048;
+		--oobe-accent-strong: #ff4d2e;
+		--oobe-text: #f7f7fb;
+		--oobe-muted: #a3a5b5;
+		--oobe-panel: rgba(20, 21, 31, 0.84);
+		--oobe-border: rgba(255, 255, 255, 0.12);
 
-		--matter-onsurface-rgb: #121212 !important;
-		* {
-			--matter-helper-theme: 26, 115, 232 !important;
+		#oobe-top {
+			box-sizing: border-box;
+			min-height: 100%;
+			width: 100%;
+			display: grid;
+			place-items: center;
+			padding: 32px;
 		}
 
 		#content {
-			padding: 79.6px 40px 23.8px 40px;
-			width: ${anura.platform.type === "mobile" ? "100vw;" : "1040px;"};
-			height: ${anura.platform.type === "mobile" ? "100vh;" : "680px;"};
+			position: relative;
 			box-sizing: border-box;
-
-			&:has(#features) {
-				padding-top: 0;
+			width: min(920px, 100%);
+			min-height: 600px;
+			padding: 48px;
+			border: 1px solid var(--oobe-border);
+			border-radius: 28px;
+			background: var(--oobe-panel);
+			box-shadow:
+				0 24px 80px rgba(0, 0, 0, 0.45),
+				inset 0 1px rgba(255, 255, 255, 0.08);
+			backdrop-filter: blur(24px);
+			-webkit-backdrop-filter: blur(24px);
+			overflow: hidden;
+			@media (max-width: 700px) {
+				min-height: min(700px, calc(100vh - 32px));
+				padding: 32px 24px;
+				border-radius: 22px;
 			}
 		}
 
 		#content .screen {
 			width: 100%;
 			height: 100%;
+			min-height: 504px;
 		}
 
 		.screen h1 {
-			margin: 48px 0 0 0;
+			max-width: 600px;
+			margin: 0;
+			color: var(--oobe-text);
+			font-size: clamp(2rem, 4vw, 3.25rem);
+			font-weight: 700;
+			letter-spacing: -0.045em;
+			line-height: 1.05;
 		}
 
 		.screen #subtitle {
-			margin: 16px 0 64px 0;
-			font-size: 24px;
-			/* https://partnermarketinghub.withgoogle.com/brands/chromebook/visual-identity/visual-identity/color-palette/ */
-			color: #5f6368;
+			margin: 16px 0 44px;
+			color: var(--oobe-muted);
+			font-size: 1.1rem;
+			line-height: 1.6;
 		}
 
 		.screen #gridContent {
 			display: grid;
-			grid-template-columns: auto minmax(0, 1fr);
-			grid-template-rows: minmax(0, 1fr) minmax(0, 1fr);
+			grid-template-columns: minmax(0, 1fr) minmax(260px, 0.8fr);
+			grid-template-rows: minmax(0, 1fr) auto;
+			gap: 32px;
+			min-height: 325px;
 		}
 
 		.screen #gridContent #topButtons {
@@ -91,30 +131,46 @@ class OobeView {
 		}
 
 		.screen .preferredButton {
-			background-color: rgb(26, 115, 232);
-			border-radius: 16px;
+			display: inline-flex;
+			align-items: center;
+			justify-content: center;
+			gap: 8px;
+			min-width: 132px;
+			background: linear-gradient(
+				135deg,
+				var(--oobe-accent),
+				var(--oobe-accent-strong)
+			);
+			border: 0;
+			border-radius: 12px;
 			border-style: none;
 			color: white;
-			height: 2em;
-			padding-left: 1em;
-			padding-right: 1em;
-			transition: 0s;
+			height: 44px;
+			padding: 0 20px;
+			font-size: 0.9rem;
+			font-weight: 700;
+			letter-spacing: 0.01em;
+			box-shadow: 0 8px 24px rgba(255, 87, 50, 0.25);
+			transition:
+				transform 0.2s,
+				box-shadow 0.2s,
+				filter 0.2s;
 		}
 
 		.screen .preferredButton:hover {
-			background-color: rgb(26, 115, 232);
-			filter: brightness(1.1);
+			filter: brightness(1.08);
+			transform: translateY(-2px);
+			box-shadow: 0 12px 28px rgba(255, 87, 50, 0.35);
 		}
 
 		.screen button {
-			background-color: var(--oobe-bg);
-			border-radius: 16px;
-			border: 1px solid gray;
-			color: rgb(26, 115, 232);
-			height: 2em;
-			margin: 0.5em;
-			padding-left: 1em;
-			padding-right: 1em;
+			background: transparent;
+			border-radius: 12px;
+			border: 1px solid var(--oobe-border);
+			color: var(--oobe-text);
+			height: 44px;
+			margin: 0;
+			padding: 0 16px;
 			cursor: pointer;
 			font-family: var(--theme-font-sans);
 		}
@@ -122,8 +178,15 @@ class OobeView {
 		.screen #animation {
 			grid-column: 2 / span 1;
 			grid-row: 1 / span 2;
-			margin-left: auto;
-			display: ${anura.platform.type === "mobile" ? "none;" : "unset;"};
+			align-self: center;
+			justify-self: end;
+			width: min(100%, 330px);
+			max-height: 270px;
+			object-fit: contain;
+			border-radius: 20px;
+			border: 1px solid var(--oobe-border);
+			box-shadow: 0 18px 50px rgba(0, 0, 0, 0.3);
+			display: ${anura.platform.type === "mobile" ? "none;" : "block;"};
 		}
 
 		.material-symbols-outlined {
@@ -131,17 +194,158 @@ class OobeView {
 		}
 
 		.sub {
-			color: #96969f;
-			font-size: 1.05rem;
+			color: var(--oobe-muted);
+			font-size: 0.84rem;
+			line-height: 1.5;
 			display: flex;
 			align-items: center;
+			gap: 6px;
 			& > .material-symbols-outlined {
-				font-size: 1.1rem;
+				color: var(--oobe-accent);
+				font-size: 1rem;
 			}
 		}
 
+		#features {
+			display: flex;
+			flex-direction: column;
+		}
+
 		#features #subtitle {
-			margin-bottom: 2rem;
+			margin-bottom: 24px;
+		}
+
+		.featureOption {
+			display: flex;
+			align-items: flex-start;
+			gap: 14px;
+			padding: 16px;
+			border: 1px solid var(--oobe-border);
+			border-radius: 16px;
+			background: rgba(255, 255, 255, 0.035);
+			cursor: pointer;
+			transition:
+				background 0.2s,
+				border-color 0.2s,
+				transform 0.2s;
+		}
+
+		.featureOption:hover {
+			background: rgba(255, 255, 255, 0.07);
+			border-color: rgba(255, 112, 72, 0.45);
+			transform: translateY(-1px);
+		}
+
+		.featureOption + .featureOption {
+			margin-top: 10px;
+		}
+
+		.featureOption:has(input:checked) {
+			background: rgba(255, 112, 72, 0.1);
+			border-color: rgba(255, 112, 72, 0.5);
+		}
+
+		.featureOption input {
+			accent-color: var(--oobe-accent);
+			width: 18px;
+			height: 18px;
+			margin: 2px 0 0;
+			flex: 0 0 auto;
+		}
+
+		.featureCopy {
+			display: flex;
+			flex-direction: column;
+			gap: 4px;
+		}
+
+		.featureTitle {
+			color: var(--oobe-text);
+			font-size: 0.95rem;
+			font-weight: 600;
+		}
+
+		.featureDescription {
+			color: var(--oobe-muted);
+			font-size: 0.78rem;
+			line-height: 1.45;
+		}
+
+		#features .sub {
+			margin-top: 16px;
+		}
+
+		#features #size {
+			margin-top: auto;
+			padding-top: 20px;
+			color: var(--oobe-text);
+			font-weight: 600;
+		}
+
+		#features #gridContent {
+			min-height: 0;
+			margin-top: 24px;
+			grid-template-columns: minmax(0, 1fr) auto;
+		}
+
+		#features #animation {
+			display: none;
+		}
+
+		#downloadingFiles {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			text-align: center;
+		}
+
+		#downloadingFiles #subtitle {
+			max-width: 480px;
+			margin-bottom: 32px;
+		}
+
+		#downloadingFiles > img {
+			width: 56px;
+			height: 56px;
+			margin-bottom: 24px;
+		}
+
+		#tracker {
+			min-height: 24px;
+			color: var(--oobe-muted);
+			font-size: 0.85rem;
+		}
+
+		@media (max-width: 700px) {
+			#oobe-top {
+				padding: 16px;
+			}
+
+			#content .screen {
+				min-height: 0;
+			}
+
+			.screen #subtitle {
+				margin-bottom: 28px;
+			}
+
+			.screen #gridContent {
+				display: block;
+				min-height: 0;
+			}
+
+			.screen #bottomButtons {
+				margin-top: 32px;
+			}
+
+			.screen #bottomButtons .preferredButton {
+				width: 100%;
+			}
+
+			#features #size {
+				margin-top: 24px;
+			}
 		}
 	`;
 
@@ -168,47 +372,47 @@ class OobeView {
 				<div class="screen" id="features">
 					<h1>Choose your experience</h1>
 					<div id="subtitle">What kind of Magma user are you?</div>
-					<label class="matter-checkbox">
+					<label class="featureOption">
 						<input
 							type="checkbox"
 							bind:checked={use(this.state.offlineEnabled)}
 						/>
-						<span>Offline Functionality</span>
+						<span class="featureCopy">
+							<span class="featureTitle">Offline functionality</span>
+							<span class="featureDescription">
+								Keep using Magma when you lose your internet connection.
+							</span>
+						</span>
 					</label>
-					<div class="sub">
-						<span class="material-symbols-outlined">info</span>
-						&nbsp;This allows you to use Magma without an internet connection.
-					</div>
-					<br></br>
-					<label class="matter-checkbox">
+					<label class="featureOption">
 						<input type="checkbox" bind:checked={use(this.state.v86Enabled)} />
-						<span>Linux Emulation</span>
+						<span class="featureCopy">
+							<span class="featureTitle">Linux emulation</span>
+							<span class="featureDescription">
+								Run Linux applications inside your Magma workspace.
+							</span>
+						</span>
 					</label>
-					<div class="sub">
-						<span class="material-symbols-outlined">info</span>
-						&nbsp;This allows you to run Linux applications on Magma.
-					</div>
-					<br></br>
-					<label class="matter-checkbox">
+					<label class="featureOption">
 						<input
 							type="checkbox"
 							bind:checked={use(this.state.localfsdriver)}
 						/>
-						<span>Experimental OPFS Driver</span>
+						<span class="featureCopy">
+							<span class="featureTitle">Experimental OPFS driver</span>
+							<span class="featureDescription">
+								Use the faster browser filesystem driver, with experimental
+								stability.
+							</span>
+						</span>
 					</label>
-					<div class="sub">
-						<span class="material-symbols-outlined">info</span>
-						&nbsp;Use experimental OPFS based filesystem driver. Comes with a
-						speed improvement at the cost of system stability.
-					</div>
-					<br></br>
 					<div id="size" class="sub">
 						<span class="material-symbols-outlined">download</span>
-						&nbsp;{use(this.state.dlsize)} download
+						<span>{use(this.state.dlsize)} download</span>
 					</div>
 					<div class="sub">
 						<span class="material-symbols-outlined">info</span>
-						&nbsp;These features can always be enabled in Settings.
+						<span>These features can always be changed later in Settings.</span>
 					</div>
 					<div id="gridContent">
 						<img id="animation" src="assets/oobe/checking_for_update.gif" />
@@ -267,7 +471,7 @@ class OobeView {
 				<div class="screen" id="downloadingFiles">
 					<div id="assetsDiv" style="display:none;"></div>
 					<h1>Downloading assets</h1>
-					<div id="subtitle" style="color: white;">
+					<div id="subtitle">
 						For the best experience, Magma needs to download required assets.
 					</div>
 					<img src="/assets/oobe/spinner.gif" />
