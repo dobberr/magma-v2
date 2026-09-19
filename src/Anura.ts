@@ -76,11 +76,11 @@ class Anura {
 	apps: any = {};
 	libs: any = {};
 	logger = {
-		log: console.log.bind(console, "anuraOS:"),
-		debug: console.debug.bind(console, "anuraOS:"),
-		info: console.info.bind(console, "anuraOS:"),
-		warn: console.warn.bind(console, "anuraOS:"),
-		error: console.error.bind(console, "anuraOS:"),
+		log: console.log.bind(console, "Magma:"),
+		debug: console.debug.bind(console, "Magma:"),
+		info: console.info.bind(console, "Magma:"),
+		warn: console.warn.bind(console, "Magma:"),
+		error: console.error.bind(console, "Magma:"),
 
 		// Create a set of streams for stdio to pipe to, useful for debugging
 		createStreams: (prefix?: string) => {
@@ -92,7 +92,7 @@ class Anura {
 						if (typeof message !== "string") {
 							message = new TextDecoder().decode(message);
 						}
-						console.log(`anuraOS: ${prefix ? `[${prefix}] ` : ""}${message}`);
+						console.log(`Magma: ${prefix ? `[${prefix}] ` : ""}${message}`);
 					},
 				}),
 
@@ -101,7 +101,7 @@ class Anura {
 						if (typeof message !== "string") {
 							message = new TextDecoder().decode(message);
 						}
-						console.error(`anuraOS: ${prefix ? `[${prefix}] ` : ""}${message}`);
+						console.error(`Magma: ${prefix ? `[${prefix}] ` : ""}${message}`);
 					},
 				}),
 			};

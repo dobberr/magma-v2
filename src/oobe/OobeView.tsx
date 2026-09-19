@@ -50,7 +50,6 @@ class OobeView {
 			),
 			#090a0f;
 		--oobe-accent: #ff7048;
-		--oobe-accent-strong: #ff4d2e;
 		--oobe-text: #f7f7fb;
 		--oobe-muted: #a3a5b5;
 		--oobe-panel: rgba(20, 21, 31, 0.84);
@@ -62,7 +61,7 @@ class OobeView {
 			width: 100%;
 			display: grid;
 			place-items: center;
-			padding: 32px;
+		padding: 32px;
 		}
 
 		#content {
@@ -136,21 +135,16 @@ class OobeView {
 			justify-content: center;
 			gap: 8px;
 			min-width: 132px;
-			background: linear-gradient(
-				135deg,
-				var(--oobe-accent),
-				var(--oobe-accent-strong)
-			);
-			border: 0;
+			background: #20222b;
+			border: 1px solid rgba(255, 255, 255, 0.16);
 			border-radius: 12px;
-			border-style: none;
 			color: white;
 			height: 44px;
 			padding: 0 20px;
 			font-size: 0.9rem;
 			font-weight: 700;
 			letter-spacing: 0.01em;
-			box-shadow: 0 8px 24px rgba(255, 87, 50, 0.25);
+			box-shadow: 0 6px 18px rgba(0, 0, 0, 0.28);
 			transition:
 				transform 0.2s,
 				box-shadow 0.2s,
@@ -158,9 +152,10 @@ class OobeView {
 		}
 
 		.screen .preferredButton:hover {
-			filter: brightness(1.08);
-			transform: translateY(-2px);
-			box-shadow: 0 12px 28px rgba(255, 87, 50, 0.35);
+			background: #2a2d38;
+			border-color: rgba(255, 112, 72, 0.55);
+			transform: translateY(-1px);
+			box-shadow: 0 8px 22px rgba(0, 0, 0, 0.38);
 		}
 
 		.screen button {

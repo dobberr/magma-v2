@@ -297,7 +297,7 @@ class QuickSettings {
 					<div class={["topButtons"]}>
 						<button
 							class={["matter-button-contained", "symbolButton"]}
-							title="Exit anuraOS"
+							title="Exit Magma"
 							on:click={() => {
 								window.location.replace(
 									anura.settings.get("exitUrl") || "https://google.com/",
